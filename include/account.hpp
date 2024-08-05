@@ -16,9 +16,9 @@ public:
 
     account(std::string name): _name(name){}  
 
-    const std::string get_name();
+    const std::string get_name() const;
 
-    const cash_map get_cash_flow();
+    const cash_map get_cash_flow() const;
 
     void receive_funds(const cash_pair&);
 };

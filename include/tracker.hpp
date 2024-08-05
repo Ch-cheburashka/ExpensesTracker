@@ -4,7 +4,6 @@
 #include <iostream>
 #include "account.hpp"
 #include <unordered_map>
-#include <memory>
 
 class expenses_tracker {
     std::unordered_map<std::string, account> accounts;

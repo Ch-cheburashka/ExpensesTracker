@@ -2,11 +2,11 @@
 #include "../include/account.hpp"
 //#include <format>
 
-const std::string account::get_name() {
+const std::string account::get_name() const {
     return _name;
 }
 
-const cash_map account::get_cash_flow() {
+const cash_map account::get_cash_flow() const {
     return _cash_flow;
 }
 

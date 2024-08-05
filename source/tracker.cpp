@@ -3,9 +3,14 @@
 long double expenses_tracker::calculate_income(const std::vector<std::string>& names) {
     long double income = 0;
     for (auto name: names) {
-        for (auto it: accounts[name].get_cash_flow()) {
-            if (it.second > 0)
-                income += it.second;
+        try {
+            for (auto it: accounts.at(name).get_cash_flow()) {
+                if (it.second > 0)
+                    income += it.second;
+            }
+        }
+        catch(...) {
+            break;
         }
     }
     return income;
