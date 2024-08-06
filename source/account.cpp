@@ -13,6 +13,6 @@ const cash_map account::get_cash_flow() const {
 void account::receive_funds(const cash_pair& pair) {
     _balance += pair.second;
     _cash_flow.insert(pair);
-    auto ymd = pair.first;
-    std::cout << static_cast<int>(ymd.year()) << ":" << static_cast<unsigned>(ymd.month()) << ":" << static_cast<unsigned>(ymd.day()) << " -- +" << pair.second << "\n";  
+    std::time_t current_time = std::chrono::system_clock::to_time_t(pair.first);
+    std::cout << std::put_time(std::localtime(&current_time), "%Y-%m-%d %H:%M:%S") << " -- +" << pair.second << "\n";  
 }

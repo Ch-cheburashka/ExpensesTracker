@@ -4,9 +4,11 @@
 #include <iostream>
 #include <map>
 #include <chrono>
+#include <ctime>
+#include <iomanip>
 
-using cash_map = std::map<std::chrono::year_month_day,double>;
-using cash_pair = std::pair<std::chrono::year_month_day,double>;
+using cash_map = std::map<std::chrono::time_point<std::chrono::system_clock>, long double>;
+using cash_pair = std::pair<std::chrono::time_point<std::chrono::system_clock>, long double>;
 
 class account {
     size_t _balance = 0;
