@@ -1,21 +1,57 @@
 #include <../include/tracker.hpp>
-#include <../include/account.hpp>
-long double expenses_tracker::calculate_income(const std::vector<std::string>& names) {
-    long double income = 0;
-    for (auto name: names) {
-        try {
-            for (auto it: accounts.at(name).get_cash_flow()) {
-                if (it.second > 0)
-                    income += it.second;
-            }
-        }
-        catch(...) {
-            break;
-        }
-    }
-    return income;
+
+const std::vector<expenses_tracker::m_transaction> expenses_tracker::get_cash_flow() const {
+    return acc._cash_flow;
 }
 
-void expenses_tracker::add_account(const account& acc) {
-    accounts.emplace(acc.get_name(), acc);
+void expenses_tracker::add_income(const std::string& category, long double funds) {
+    acc._balance += funds;
+    acc._cash_flow.emplace_back(category, std::chrono::system_clock::now(), funds);
 }
+
+void expenses_tracker::add_expense(const std::string& category, long double expense) {
+    acc._balance -= expense;
+    acc._cash_flow.emplace_back(category, std::chrono::system_clock::now(), -expense);
+}
+
+long double expenses_tracker::total_income() {
+    long double sum = 0.0;
+    for (auto f: acc._cash_flow) {
+        if (f._funds >= 0.0) 
+            sum += f._funds;
+    }
+    return sum;
+}
+
+long double expenses_tracker::total_expenses() {
+    long double sum = 0.0;
+    for (auto f: acc._cash_flow) {
+        if (f._funds < 0.0) 
+            sum += f._funds;    
+    }
+    return (-sum);
+}
+
+long double expenses_tracker::income_by_category(const std::string& category) {
+    long double sum = 0.0;
+    for (auto f: acc._cash_flow) {
+        if (f._funds >= 0.0 && f._category == category) 
+            sum += f._funds;
+    }
+    return sum;
+}
+
+long double expenses_tracker::expenses_by_category(const std::string& category) {
+    long double sum = 0.0;
+    for (auto f: acc._cash_flow) {
+        if (f._funds < 0.0 && f._category == category) 
+            sum += f._funds; 
+    }
+    return (-sum); 
+}
+
+
+
+
+
+

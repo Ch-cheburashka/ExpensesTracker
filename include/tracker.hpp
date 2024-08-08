@@ -2,18 +2,32 @@
 #define EXPENSES_TRACKER_TRACKER_HPP
 
 #include <iostream>
-#include "account.hpp"
-#include <unordered_map>
+#include <chrono>
+#include <ctime>
+#include <iomanip>
 
 class expenses_tracker {
-    std::unordered_map<std::string, account> accounts;
+    struct m_transaction {
+        std::string _category;
+        std::chrono::time_point<std::chrono::system_clock> _time_point;
+        long double _funds;
+        m_transaction(std::string category, std::chrono::time_point<std::chrono::system_clock> time_point, long double funds): _category(category), _time_point(time_point), _funds(funds) {}    
+    };
 
-public:
+    struct account {
+        size_t _balance = 0;
+        std::vector<m_transaction> _cash_flow;
+   };
 
-    void add_account(const account&);
-
-    long double calculate_income(const std::vector<std::string>&);
-
+    account acc;
+public:  
+    void add_expense(const std::string&, long double);
+    void add_income(const std::string&, long double);  
+    long double total_income();
+    long double total_expenses();
+    long double income_by_category(const std::string&);
+    long double expenses_by_category(const std::string&);   
+    const std::vector<m_transaction> get_cash_flow() const; 
 };
 
 #endif //EXPENSES_TRACKER_TRACKER_HPP
