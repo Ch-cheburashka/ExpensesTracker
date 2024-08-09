@@ -24,12 +24,14 @@ class expenses_tracker {
     account acc;
 public:  
     void add_expense(const std::string&, long double);
-    void add_income(const std::string&, long double);  
-    long double total_income();
-    long double total_expenses();
-    long double income_by_category(const std::string&);
-    long double expenses_by_category(const std::string&);   
-    const std::vector<m_transaction> get_cash_flow() const; 
+    void add_income(const std::string&, long double);
+    [[nodiscard]] long double get_balance() const;
+    [[nodiscard]] long double total_income() const;
+    [[nodiscard]] long double total_expenses() const;
+    [[nodiscard]] long double income_by_category(const std::string&) const;
+    [[nodiscard]] long double expenses_by_category(const std::string&) const;
+    [[nodiscard]] std::vector<transaction> cash_flow() const;
+    void upload_cashflow_to_file(std::ofstream &);
 };
 
 #endif //EXPENSES_TRACKER_TRACKER_HPP
