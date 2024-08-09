@@ -50,6 +50,9 @@ long double expenses_tracker::expenses_by_category(const std::string& category) 
     return (-sum); 
 }
 
+[[nodiscard]] long double expenses_tracker::get_balance() const {
+    return acc._balance;
+}
 
 
 

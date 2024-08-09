@@ -5,18 +5,20 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
+#include <utility>
+#include <fstream>
 
 class expenses_tracker {
-    struct m_transaction {
+    struct transaction {
         std::string _category;
         std::chrono::time_point<std::chrono::system_clock> _time_point;
         long double _funds;
-        m_transaction(std::string category, std::chrono::time_point<std::chrono::system_clock> time_point, long double funds): _category(category), _time_point(time_point), _funds(funds) {}    
+        transaction(std::string category, std::chrono::time_point<std::chrono::system_clock> time_point, long double funds): _category(std::move(category)), _time_point(time_point), _funds(funds) {}
     };
 
     struct account {
-        size_t _balance = 0;
-        std::vector<m_transaction> _cash_flow;
+        long double _balance = 0;
+        std::vector<transaction> _cash_flow;
    };
 
     account acc;
